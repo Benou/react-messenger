@@ -48,6 +48,7 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
+<<<<<<< HEAD
     <Card>
       <form
         className={styles['login-form']}
@@ -93,6 +94,21 @@ const LoginForm = ({ onLogin }) => {
         </div>
       </form>
     </Card>
+=======
+    <form onSubmit={submitLoginHandler}>
+      <div>
+        <label>Email</label>
+        <input type="email" value={email} onChange={emailChangeHandler} />
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" value={password} onChange={passwordChangeHandler} />
+      </div>
+      <div>
+        <button>Login</button>
+      </div>
+    </form>
+>>>>>>> initial commit
   );
 };
 

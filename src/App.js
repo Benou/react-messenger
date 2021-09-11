@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment, useContext } from 'react';
 
-function App() {
+import AuthContext from './store/auth-context';
+import LoginForm from './components/Auth/LoginForm';
+import Messenger from './components/Messenger/Messenger';
+
+const App = () => {
+  const { user, signIn } = useContext(AuthContext);
+
+  const loginHandler = ({ email, password }) => {
+    signIn(email, password);
+  };
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      {!user && <LoginForm onLogin={loginHandler} />}
+      {!!user && <Messenger user={user} />}
+    </Fragment>
   );
-}
+};
 
 export default App;

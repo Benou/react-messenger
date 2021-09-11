@@ -22,15 +22,9 @@ const localStorageKey = 'react-messenger-credentials';
 export const AuthContextProvider = ({ children }) => {
   const { show: showModal } = useContext(ModalContext);
   const [user] = useAuthState(firebaseAuth);
-<<<<<<< HEAD
   const [signInWithEmailAndPassword, , , signInError] =
     useSignInWithEmailAndPassword(firebaseAuth);
   const [createUserWithEmailAndPassword, , , registerError] =
-=======
-  const [signInWithEmailAndPassword, , signInError] =
-    useSignInWithEmailAndPassword(firebaseAuth);
-  const [createUserWithEmailAndPassword, , registerError] =
->>>>>>> feat(UI): add modal component
     useCreateUserWithEmailAndPassword(firebaseAuth);
   const creationTime = user
     ? new Date(user.metadata.creationTime).getTime()
@@ -79,11 +73,7 @@ export const AuthContextProvider = ({ children }) => {
     if (signInError || registerError) {
       showModal(
         'Oups une erreur est survenue',
-<<<<<<< HEAD
         (signInError || registerError).toString()
-=======
-        'Veuillez réessayer plus tard !'
->>>>>>> feat(UI): add modal component
       );
     }
   }, [signInError, registerError, showModal]);

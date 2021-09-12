@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 
 import { firestore } from '../../firebase';
 import AuthContext from '../../store/auth-context';
+import Logout from '../Auth/Logout';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
 
@@ -23,6 +24,7 @@ const Messenger = () => {
 
   return (
     <Fragment>
+      <Logout></Logout>
       <MessageList messages={messages} />
       <MessageForm onAddMessage={addMessageHandler} />
     </Fragment>

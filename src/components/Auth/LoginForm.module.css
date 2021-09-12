@@ -5,3 +5,8 @@
 .login-form > :last-child {
   margin-bottom: 0;
 }
+
+.login-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}

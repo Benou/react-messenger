@@ -1,12 +1,20 @@
 import { useState } from 'react';
 
+import { Validators } from '../../utils/Validators';
+import useFormValidation from '../../hooks/use-form-validation-hook';
 import Card from '../UI/Card';
 import Input from '../UI/Input';
+import Button from '../UI/Button';
 import styles from './LoginForm.module.css';
 
-const LoginForm = (props) => {
+const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [touched, setTouched] = useState({});
+  const validation = useFormValidation({
+    email: [email, [Validators.required()]],
+    password: [password, [Validators.required()]],
+  });
 
   const emailChangeHandler = (event) => {
     setEmail(event.target.value);
@@ -16,11 +24,18 @@ const LoginForm = (props) => {
     setPassword(event.target.value);
   };
 
-  const submitLoginHandler = (event) => {
-    event.preventDefault();
-    props.onLogin({ email, password });
+  const blurHandler = (event) => {
+    setTouched((prevTouched) => ({ ...prevTouched, [event.target.id]: true }));
   };
 
+  const submitLoginHandler = (event) => {
+    event.preventDefault();
+
+    if (validation.email && validation.password) {
+      onLogin({ email, password });
+    }
+  };
+  console.log(validation);
   return (
     <Card>
       <form
@@ -34,17 +49,35 @@ const LoginForm = (props) => {
           type="email"
           label="E-mail"
           value={email}
+          error={
+            touched.email && !validation.email && 'Veuillez saisir votre e-mail'
+          }
+          maxLength="64"
           onChange={emailChangeHandler}
+          onBlur={blurHandler}
         />
         <Input
           id="password"
           type="password"
           label="Mot de passe"
           value={password}
+          error={
+            touched.password &&
+            !validation.password &&
+            'Veuillez saisir votre mot de passe'
+          }
+          minLength="8"
+          maxLength="8"
           onChange={passwordChangeHandler}
+          onBlur={blurHandler}
         />
-        <div>
-          <button>Login</button>
+        <div className={styles['login-form-actions']}>
+          <Button
+            type="submit"
+            disabled={!validation.email || !validation.password}
+          >
+            Login
+          </Button>
         </div>
       </form>
     </Card>

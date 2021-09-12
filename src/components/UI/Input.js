@@ -1,10 +1,19 @@
 import styles from './Input.module.css';
 
-const Input = ({ className, id, type, label, ...rest }) => {
+const Input = ({ className, id, type, label, error, ...rest }) => {
+  const inputGroupClassName = [
+    styles['input-group'],
+    className ? className : '',
+    error ? styles['error'] : '',
+  ]
+    .filter((style) => style.length)
+    .join(' ');
+
   return (
-    <div className={`${styles['input-group']} ${className}`}>
-      { label && <label htmlFor={id}>{label}</label>}
+    <div className={inputGroupClassName}>
+      {label && <label htmlFor={id}>{label}</label>}
       <input id={id} type={type || 'text'} {...rest} />
+      {!!error && <p className={styles['input-group-hint']}>{error}</p>}
     </div>
   );
 };

@@ -1,21 +1,29 @@
-import { Fragment, useContext } from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 
-import AuthContext from './store/auth-context';
-import LoginForm from './components/Auth/LoginForm';
+import AuthGuard from './components/Auth/AuthGuard';
+import Login from './components/Auth/Login';
 import Messenger from './components/Messenger/Messenger';
 
 const App = () => {
-  const { user, signIn } = useContext(AuthContext);
-
-  const loginHandler = ({ email, password }) => {
-    signIn(email, password);
-  };
-  
   return (
-    <Fragment>
-      {!user && <LoginForm onLogin={loginHandler} />}
-      {!!user && <Messenger user={user} />}
-    </Fragment>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <AuthGuard path="/messenger">
+          <Messenger />
+        </AuthGuard>
+        <Route path="/**">
+          <Redirect to="/login" />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 

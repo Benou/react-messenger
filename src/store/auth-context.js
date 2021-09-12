@@ -13,6 +13,7 @@ const localStorageKey = 'react-messenger-credentials';
 export const AuthContextProvider = ({ children }) => {
   const [signInWithEmailAndPassword, authState] =
     useSignInWithEmailAndPassword(firebaseAuth);
+  const user = authState ? authState.user : null;
 
   const signInHandler = useCallback(
     (email, password, memoize = false) => {
@@ -38,9 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [signInHandler]);
 
   return (
-    <AuthContext.Provider
-      value={{ user: authState ? authState.user : null, signIn: signInHandler }}
-    >
+    <AuthContext.Provider value={{ user, signIn: signInHandler }}>
       {children}
     </AuthContext.Provider>
   );

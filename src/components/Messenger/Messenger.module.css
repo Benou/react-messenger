@@ -1,0 +1,16 @@
+.messenger {
+  width: 100%;
+  height: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.messenger > * {
+  margin-bottom: 16px;
+}
+
+.messenger > :last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,11 @@
+.message-form {
+  display: flex;
+}
+
+.message-form .form-group {
+  flex: 1;
+}
+
+.message-form .form-group input {
+  width: 100%;
+}

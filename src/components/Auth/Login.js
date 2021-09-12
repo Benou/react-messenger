@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
 import LoginForm from './LoginForm';
+import styles from './Login.module.css';
 
 const Login = () => {
   const history = useHistory();
@@ -18,7 +19,11 @@ const Login = () => {
     signIn(email, password);
   };
 
-  return <LoginForm onLogin={loginHandler} />;
+  return (
+    <div className={styles.login}>
+      <LoginForm onLogin={loginHandler} />
+    </div>
+  );
 };
 
 export default Login;

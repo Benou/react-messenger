@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import Card from '../UI/Card';
+import styles from './MessageForm.module.css';
+
 const MessageForm = ({ onAddMessage }) => {
   const [message, setMessage] = useState('');
 
@@ -14,19 +17,21 @@ const MessageForm = ({ onAddMessage }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div>
-        <label>Say</label>
-        <input
-          type="text"
-          value={message}
-          onChange={messageChangeHandler}
-        ></input>
-      </div>
-      <div>
-        <button>Send</button>
-      </div>
-    </form>
+    <Card>
+      <form className={styles['message-form']} onSubmit={submitHandler}>
+        <div className={styles['form-group']}>
+          <input
+            type="text"
+            placeholder="Dites quelque chose..."
+            value={message}
+            onChange={messageChangeHandler}
+          ></input>
+        </div>
+        <div>
+          <button>Send</button>
+        </div>
+      </form>
+    </Card>
   );
 };
 

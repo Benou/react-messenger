@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from 'firebase/app';
 
@@ -7,6 +7,7 @@ import AuthContext from '../../store/auth-context';
 import Logout from '../Auth/Logout';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
+import styles from './Messenger.module.css';
 
 const Messenger = () => {
   const { user } = useContext(AuthContext);
@@ -18,16 +19,16 @@ const Messenger = () => {
     messagesRef.add({
       text: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      userId: user.uid
+      userId: user.uid,
     });
   };
 
   return (
-    <Fragment>
+    <div className={styles.messenger}>
       <Logout></Logout>
       <MessageList messages={messages} />
       <MessageForm onAddMessage={addMessageHandler} />
-    </Fragment>
+    </div>
   );
 };
 

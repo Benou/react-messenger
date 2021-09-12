@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '../UI/Card';
 import Input from '../UI/Input';
@@ -13,6 +13,10 @@ const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
   const validation = useFormValidation({
     message: [message, [Validators.required()]],
   });
+
+  useEffect(() => {
+    onFocus();
+  }, [onFocus]);
 
   const messageChangeHandler = (event) => {
     setMessage(event.target.value);
@@ -56,7 +60,11 @@ const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
           onChange={messageChangeHandler}
           onBlur={blurHandler}
         />
-        <Button type="submit" disabled={!validation.message}>
+        <Button
+          type="submit"
+          className={styles['message-form-button']}
+          disabled={!validation.message}
+        >
           Envoyer
         </Button>
       </form>

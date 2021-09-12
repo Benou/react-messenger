@@ -14,3 +14,6 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const firebaseAuth = firebaseApp.auth();
 export const firestore = firebaseApp.firestore();
+
+export const messagesCollection = firestore.collection('messages');
+export const messagesQuery = messagesCollection.orderBy('createdAt').limit(25);

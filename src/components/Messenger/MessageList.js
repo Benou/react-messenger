@@ -4,7 +4,7 @@ import styles from './MessageList.module.css';
 
 const MessageList = ({ messages }) => {
   const items = (messages || []).map((message) => (
-    <MessageListItem message={message} key={message.id} />
+    <MessageListItem {...message} key={message.id} />
   ));
 
   return (

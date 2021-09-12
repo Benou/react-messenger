@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Validators } from '../../utils/Validators';
 import useFormValidation from '../../hooks/use-form-validation-hook';
+import { Validators } from '../../utils/Validators';
+import Button from '../UI/Button';
 import Card from '../UI/Card';
 import Input from '../UI/Input';
-import Button from '../UI/Button';
 import styles from './LoginForm.module.css';
 
 const LoginForm = ({ onLogin }) => {
@@ -35,7 +35,7 @@ const LoginForm = ({ onLogin }) => {
       onLogin({ email, password });
     }
   };
-  console.log(validation);
+
   return (
     <Card>
       <form
@@ -67,7 +67,7 @@ const LoginForm = ({ onLogin }) => {
             'Veuillez saisir votre mot de passe'
           }
           minLength="8"
-          maxLength="8"
+          maxLength="16"
           onChange={passwordChangeHandler}
           onBlur={blurHandler}
         />
@@ -76,7 +76,7 @@ const LoginForm = ({ onLogin }) => {
             type="submit"
             disabled={!validation.email || !validation.password}
           >
-            Login
+            Se connecter
           </Button>
         </div>
       </form>

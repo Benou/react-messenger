@@ -1,0 +1,28 @@
+.message-list-item {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.message-list-item.my-message {
+  flex-direction: row-reverse;
+}
+
+.message-list-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-top: auto;
+}
+
+.message-list-item.my-message img {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+.message-list-item-message {
+  background-color: #04d5e8;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+}

@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from 'firebase/app';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import { firestore } from '../../firebase';
+import { messagesCollection, messagesQuery } from '../../firebase';
 import AuthContext from '../../store/auth-context';
 import Logout from '../Auth/Logout';
 import MessageForm from './MessageForm';
@@ -10,24 +10,27 @@ import MessageList from './MessageList';
 import styles from './Messenger.module.css';
 
 const Messenger = () => {
-  const { user } = useContext(AuthContext);
-  const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
-  const [messages] = useCollectionData(query, { idField: 'id' });
-
+  const { user, creationTime } = useContext(AuthContext);
+  const [collectionData] = useCollectionData(messagesQuery, { idField: 'id' });
   const [isFormFocused, setIsFormFocused] = useState(false);
+  const messages = (collectionData || []).map((message) =>
+    Object.assign(message, {
+      isMyMessage: message.userId === user.uid,
+    })
+  );
 
   const addMessageHandler = (message) => {
-    messagesRef.add({
+    messagesCollection.add({
       text: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       userId: user.uid,
+      monsterId: creationTime,
     });
   };
 
-  const focusFormHandler = () => {
+  const focusFormHandler = useCallback(() => {
     setIsFormFocused(true);
-  };
+  }, []);
 
   const blurFormHandler = () => {
     setIsFormFocused(false);

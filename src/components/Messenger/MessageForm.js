@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Card from '../UI/Card';
+import Input from '../UI/Input';
 import styles from './MessageForm.module.css';
 
 const MessageForm = ({ onAddMessage }) => {
@@ -19,14 +20,12 @@ const MessageForm = ({ onAddMessage }) => {
   return (
     <Card>
       <form className={styles['message-form']} onSubmit={submitHandler}>
-        <div className={styles['form-group']}>
-          <input
-            type="text"
-            placeholder="Dites quelque chose..."
-            value={message}
-            onChange={messageChangeHandler}
-          ></input>
-        </div>
+        <Input
+          className={styles['message-form-input']}
+          placeholder="Dites quelque chose..."
+          value={message}
+          onChange={messageChangeHandler}
+        />
         <div>
           <button>Send</button>
         </div>

@@ -2,10 +2,7 @@
   display: flex;
 }
 
-.message-form .form-group {
+.message-form-input {
   flex: 1;
-}
-
-.message-form .form-group input {
-  width: 100%;
+  margin-right: 16px;
 }

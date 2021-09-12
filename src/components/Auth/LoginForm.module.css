@@ -1,0 +1,7 @@
+.login-form > * {
+  margin-bottom: 16px;
+}
+
+.login-form > :last-child {
+  margin-bottom: 0;
+}

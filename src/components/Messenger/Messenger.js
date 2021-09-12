@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from 'firebase/app';
 
@@ -15,6 +15,8 @@ const Messenger = () => {
   const query = messagesRef.orderBy('createdAt').limit(25);
   const [messages] = useCollectionData(query, { idField: 'id' });
 
+  const [isFormFocused, setIsFormFocused] = useState(false);
+
   const addMessageHandler = (message) => {
     messagesRef.add({
       text: message,
@@ -23,11 +25,31 @@ const Messenger = () => {
     });
   };
 
+  const focusFormHandler = () => {
+    setIsFormFocused(true);
+  };
+
+  const blurFormHandler = () => {
+    setIsFormFocused(false);
+  };
+
+  useEffect(() => {
+    if (isFormFocused && messages.length) {
+      const lastMessage = messages[messages.length - 1];
+      const el = document.getElementById(`message-${lastMessage.id}`);
+      el && el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isFormFocused, messages]);
+
   return (
     <div className={styles.messenger}>
       <Logout></Logout>
       <MessageList messages={messages} />
-      <MessageForm onAddMessage={addMessageHandler} />
+      <MessageForm
+        onAddMessage={addMessageHandler}
+        onFocus={focusFormHandler}
+        onBlur={blurFormHandler}
+      />
     </div>
   );
 };

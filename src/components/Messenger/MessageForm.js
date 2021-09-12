@@ -4,7 +4,7 @@ import Card from '../UI/Card';
 import Input from '../UI/Input';
 import styles from './MessageForm.module.css';
 
-const MessageForm = ({ onAddMessage }) => {
+const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
   const [message, setMessage] = useState('');
 
   const messageChangeHandler = (event) => {
@@ -19,7 +19,7 @@ const MessageForm = ({ onAddMessage }) => {
 
   return (
     <Card>
-      <form className={styles['message-form']} onSubmit={submitHandler}>
+      <form className={styles['message-form']} onSubmit={submitHandler} onFocus={onFocus} onBlur={onBlur}>
         <Input
           className={styles['message-form-input']}
           placeholder="Dites quelque chose..."

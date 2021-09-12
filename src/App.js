@@ -11,7 +11,7 @@ import Messenger from './components/Messenger/Messenger';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/react-messenger">
       <Switch>
         <Route path="/login">
           <Login />
@@ -19,7 +19,7 @@ const App = () => {
         <AuthGuard path="/messenger">
           <Messenger />
         </AuthGuard>
-        <Route path="/**">
+        <Route>
           <Redirect to="/login" />
         </Route>
       </Switch>

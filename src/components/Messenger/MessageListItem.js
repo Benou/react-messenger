@@ -1,3 +1,4 @@
+import MonsterAvatar from '../Monsters/MonsterAvatar';
 import styles from './MessageListItem.module.css';
 
 const MessageListItem = ({ id, text, isMyMessage, monsterId }) => {
@@ -10,11 +11,8 @@ const MessageListItem = ({ id, text, isMyMessage, monsterId }) => {
 
   return (
     <li className={itemClassName} id={`message-${id}`}>
-      <img
-        src={`https://www.gravatar.com/avatar/${monsterId}?d=monsterid&f=y`}
-        alt="avatar"
-      />
-      <div className={styles['message-list-item-message']}>{text}</div>
+      <MonsterAvatar className={styles['message-list-item-avatar']} monsterId={monsterId}></MonsterAvatar>
+      <div className={styles['message-list-item-text']}>{text}</div>
     </li>
   );
 };

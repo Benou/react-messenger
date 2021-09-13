@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import Card from '../UI/Card';
-import Input from '../UI/Input';
-import Button from '../UI/Button';
-import styles from './MessageForm.module.css';
 import useFormValidation from '../../hooks/use-form-validation-hook';
 import { Validators } from '../../utils/Validators';
+import Button from '../UI/Button';
+import Card from '../UI/Card';
+import Input from '../UI/Input';
+import styles from './MessageForm.module.css';
 
-const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
+const MessageForm = ({ onAddMessage }) => {
   const [message, setMessage] = useState('');
   const [touched, setTouched] = useState({});
   const validation = useFormValidation({
     message: [message, [Validators.required(), Validators.maxlength(128)]],
   });
-
-  useEffect(() => {
-    onFocus();
-  }, [onFocus]);
 
   const messageChangeHandler = (event) => {
     setMessage(event.target.value);
@@ -38,35 +34,30 @@ const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
 
   return (
     <Card>
-      <form
-        className={styles['message-form']}
-        onSubmit={submitHandler}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        noValidate
-        autoComplete="off"
-      >
-        <Input
-          id="message"
-          className={styles['message-form-input']}
-          placeholder="Dites quelque chose..."
-          value={message}
-          error={
-            touched.message &&
-            !validation.message &&
-            'Veuillez saisir un message'
-          }
-          maxLength="128"
-          onChange={messageChangeHandler}
-          onBlur={blurHandler}
-        />
-        <Button
-          type="submit"
-          className={styles['message-form-button']}
-          disabled={!validation.message}
-        >
-          Envoyer
-        </Button>
+      <form onSubmit={submitHandler} noValidate autoComplete="off">
+        <div className={styles['message-form']}>
+          <Input
+            id="message"
+            className={styles['message-form-input']}
+            placeholder="Dites quelque chose..."
+            value={message}
+            error={
+              touched.message &&
+              !validation.message &&
+              'Veuillez saisir un message'
+            }
+            maxLength="128"
+            onChange={messageChangeHandler}
+            onBlur={blurHandler}
+          />
+          <Button
+            type="submit"
+            className={styles['message-form-button']}
+            disabled={!validation.message}
+          >
+            Envoyer
+          </Button>
+        </div>
       </form>
     </Card>
   );

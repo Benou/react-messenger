@@ -1,21 +1,16 @@
-import { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useContext } from 'react';
 
 import AuthContext from '../../store/auth-context';
+import MonsterList from '../Monsters/MonsterList';
 import Button from '../UI/Button';
+import styles from './Logout.module.css';
 
-const Logout = () => {
-  const history = useHistory();
-  const { user, signOut } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (!user) {
-      history.push('/login');
-    }
-  }, [user, history]);
+const Logout = ({ monsters }) => {
+  const { signOut } = useContext(AuthContext);
 
   return (
-    <div>
+    <div className={styles.logout}>
+      <MonsterList monsters={monsters}></MonsterList>
       <Button onClick={signOut}>Déconnexion</Button>
     </div>
   );

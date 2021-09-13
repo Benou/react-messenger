@@ -1,0 +1,10 @@
+.monster-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.monster-list > * {
+  margin-right: 8px;
+}

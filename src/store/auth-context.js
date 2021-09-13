@@ -6,6 +6,7 @@ import {
 } from 'react-firebase-hooks/auth';
 
 import { firebaseAuth } from '../firebase';
+import useMonsterVisibility from '../hooks/use-monster-visibility-hook';
 import ModalContext from './modal-context';
 
 const AuthContext = React.createContext({
@@ -28,6 +29,11 @@ export const AuthContextProvider = ({ children }) => {
   const creationTime = user
     ? new Date(user.metadata.creationTime).getTime()
     : 0;
+  const [monster, setMonsterVisibility] = useMonsterVisibility(
+    user,
+    creationTime
+  );
+
   const signInHandler = useCallback(
     (email, password, memoize = false) => {
       signInWithEmailAndPassword(email, password);
@@ -46,7 +52,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const signOutHandler = useCallback(async () => {
     await firebaseAuth.signOut();
-  }, []);
+    setMonsterVisibility(false);
+  }, [setMonsterVisibility]);
 
   const registerHandler = useCallback(
     (email, password) => {
@@ -70,6 +77,12 @@ export const AuthContextProvider = ({ children }) => {
       );
     }
   }, [signInError, registerError, showModal]);
+
+  useEffect(() => {
+    if (user && monster) {
+      setMonsterVisibility(true);
+    }
+  }, [user, monster, setMonsterVisibility]);
 
   return (
     <AuthContext.Provider

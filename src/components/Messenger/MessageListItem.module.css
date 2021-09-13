@@ -7,26 +7,23 @@
   flex-direction: row-reverse;
 }
 
-.message-list-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+.message-list-item-avatar {
   margin-right: 8px;
   margin-top: auto;
 }
 
-.message-list-item.my-message img {
+.message-list-item.my-message .message-list-item-avatar {
   margin-left: 8px;
   margin-right: 0;
 }
 
-.message-list-item-message {
+.message-list-item-text {
   background-color: #04d5e8;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
 }
 
-.message-list-item.my-message .message-list-item-message {
+.message-list-item.my-message .message-list-item-text {
   background-color: #78f1fc;
 }

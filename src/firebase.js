@@ -17,3 +17,6 @@ export const firestore = firebaseApp.firestore();
 
 export const messagesCollection = firestore.collection('messages');
 export const messagesQuery = messagesCollection.orderBy('createdAt').limit(25);
+
+export const monstersCollection = firestore.collection('monsters');
+export const monstersQuery = monstersCollection.where('visible', '==', true);

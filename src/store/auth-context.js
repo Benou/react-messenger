@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
@@ -6,6 +6,7 @@ import {
 } from 'react-firebase-hooks/auth';
 
 import { firebaseAuth } from '../firebase';
+import ModalContext from './modal-context';
 
 const AuthContext = React.createContext({
   user: null,
@@ -18,15 +19,15 @@ const AuthContext = React.createContext({
 const localStorageKey = 'react-messenger-credentials';
 
 export const AuthContextProvider = ({ children }) => {
+  const { show: showModal } = useContext(ModalContext);
   const [user] = useAuthState(firebaseAuth);
-  const [signInWithEmailAndPassword] =
+  const [signInWithEmailAndPassword, , , signInError] =
     useSignInWithEmailAndPassword(firebaseAuth);
-  const [createUserWithEmailAndPassword] =
+  const [createUserWithEmailAndPassword, , , registerError] =
     useCreateUserWithEmailAndPassword(firebaseAuth);
   const creationTime = user
     ? new Date(user.metadata.creationTime).getTime()
     : 0;
-
   const signInHandler = useCallback(
     (email, password, memoize = false) => {
       signInWithEmailAndPassword(email, password);
@@ -60,6 +61,15 @@ export const AuthContextProvider = ({ children }) => {
       signInHandler(credentials.email, credentials.password, true);
     }
   }, [signInHandler]);
+
+  useEffect(() => {
+    if (signInError || registerError) {
+      showModal(
+        'Oups une erreur est survenue',
+        (signInError || registerError).toString()
+      );
+    }
+  }, [signInError, registerError, showModal]);
 
   return (
     <AuthContext.Provider

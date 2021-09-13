@@ -24,7 +24,7 @@ const App = () => {
           <AuthGuard path="/messenger">
             <Messenger />
           </AuthGuard>
-          <Route>
+          <Route path="/**">
             <Redirect to="/login" />
           </Route>
         </Switch>

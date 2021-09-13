@@ -1,0 +1,16 @@
+.register-form > * {
+  margin-bottom: 16px;
+}
+
+.register-form > :last-child {
+  margin-bottom: 0;
+}
+
+.register-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.register-form-actions :first-child {
+  margin-right: 8px;
+}

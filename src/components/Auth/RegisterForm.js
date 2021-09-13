@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import useFormValidation from '../../hooks/use-form-validation-hook';
 import { Validators } from '../../utils/Validators';
-import Button from '../UI/Button';
 import Card from '../UI/Card';
+import Button from '../UI/Button';
 import Input from '../UI/Input';
-import styles from './LoginForm.module.css';
+import styles from './RegisterForm.module.css';
 
-const LoginForm = ({ onLogin }) => {
+const RegisterForm = ({ onRegister, onCancel }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [touched, setTouched] = useState({});
   const validation = useFormValidation({
     email: [
@@ -25,6 +25,10 @@ const LoginForm = ({ onLogin }) => {
         Validators.maxlength(16),
       ],
     ],
+    confirmPassword: [
+      confirmPassword,
+      [Validators.required(), Validators.password(password)],
+    ],
   });
 
   const emailChangeHandler = (event) => {
@@ -35,22 +39,29 @@ const LoginForm = ({ onLogin }) => {
     setPassword(event.target.value);
   };
 
+  const confirmPasswordChangeHandler = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const blurHandler = (event) => {
-    setTouched((prevTouched) => ({ ...prevTouched, [event.target.id]: true }));
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [event.target.id]: true,
+    }));
   };
 
   const submitLoginHandler = (event) => {
     event.preventDefault();
 
-    if (validation.email && validation.password) {
-      onLogin({ email, password });
+    if (validation.email && validation.password && validation.confirmPassword) {
+      onRegister({ email, password });
     }
   };
 
   return (
     <Card>
       <form
-        className={styles['login-form']}
+        className={styles['register-form']}
         onSubmit={submitLoginHandler}
         noValidate
         autoComplete="off"
@@ -61,7 +72,9 @@ const LoginForm = ({ onLogin }) => {
           label="E-mail"
           value={email}
           error={
-            touched.email && !validation.email && 'Veuillez saisir votre e-mail'
+            touched.email &&
+            !validation.email &&
+            'Veuillez saisir votre e-mail au bon format'
           }
           maxLength="64"
           onChange={emailChangeHandler}
@@ -75,20 +88,39 @@ const LoginForm = ({ onLogin }) => {
           error={
             touched.password &&
             !validation.password &&
-            'Veuillez saisir votre mot de passe'
+            'Veuillez saisir un mot de passe entre 8 et 16 charactères'
           }
           minLength="8"
           maxLength="16"
           onChange={passwordChangeHandler}
           onBlur={blurHandler}
         />
-        <div className={styles['login-form-actions']}>
-          <Link to="/register">Créer un compte</Link>
+        <Input
+          id="confirmPassword"
+          type="password"
+          label="Confirmation du mot de passe"
+          value={confirmPassword}
+          error={
+            touched.confirmPassword &&
+            !validation.confirmPassword &&
+            'Veuillez saisir le même mot de passe'
+          }
+          minLength="8"
+          maxLength="16"
+          onChange={confirmPasswordChangeHandler}
+          onBlur={blurHandler}
+        />
+        <div className={styles['register-form-actions']}>
+          <Button onClick={onCancel}>Annuler</Button>
           <Button
             type="submit"
-            disabled={!validation.email || !validation.password}
+            disabled={
+              !validation.email ||
+              !validation.password ||
+              !validation.confirmPassword
+            }
           >
-            Se connecter
+            Créer mon compte
           </Button>
         </div>
       </form>
@@ -96,4 +128,4 @@ const LoginForm = ({ onLogin }) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

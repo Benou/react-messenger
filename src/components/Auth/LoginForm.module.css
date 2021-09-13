@@ -8,5 +8,19 @@
 
 .login-form-actions {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+}
+
+.login-form-actions a {
+  flex: 1;
+}
+
+.login-form-actions a:visited {
+  color: black;
+}
+
+.login-form-actions a:focus,
+.login-form-actions a:hover,
+.login-form-actions a:active {
+  color: #04d5e8;
 }

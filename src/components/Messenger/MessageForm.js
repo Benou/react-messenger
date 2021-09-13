@@ -11,7 +11,7 @@ const MessageForm = ({ onAddMessage, onFocus, onBlur }) => {
   const [message, setMessage] = useState('');
   const [touched, setTouched] = useState({});
   const validation = useFormValidation({
-    message: [message, [Validators.required()]],
+    message: [message, [Validators.required(), Validators.maxlength(128)]],
   });
 
   useEffect(() => {

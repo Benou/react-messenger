@@ -7,6 +7,7 @@ import {
 
 import AuthGuard from './components/Auth/AuthGuard';
 import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
 import Messenger from './components/Messenger/Messenger';
 import './App.css';
 
@@ -16,6 +17,9 @@ const App = () => {
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <AuthGuard path="/messenger">
             <Messenger />

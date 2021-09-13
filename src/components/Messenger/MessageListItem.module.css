@@ -26,3 +26,7 @@
   padding: 8px 16px;
   border-radius: 20px;
 }
+
+.message-list-item.my-message .message-list-item-message {
+  background-color: #78f1fc;
+}

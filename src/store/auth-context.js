@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import {
   useAuthState,
+  useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth';
 
@@ -11,6 +12,7 @@ const AuthContext = React.createContext({
   creationTime: 0,
   signIn: (email, password) => {},
   signOut: () => {},
+  register: (email, password) => {},
 });
 
 const localStorageKey = 'react-messenger-credentials';
@@ -19,6 +21,8 @@ export const AuthContextProvider = ({ children }) => {
   const [user] = useAuthState(firebaseAuth);
   const [signInWithEmailAndPassword] =
     useSignInWithEmailAndPassword(firebaseAuth);
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(firebaseAuth);
   const creationTime = user
     ? new Date(user.metadata.creationTime).getTime()
     : 0;
@@ -43,6 +47,13 @@ export const AuthContextProvider = ({ children }) => {
     await firebaseAuth.signOut();
   }, []);
 
+  const registerHandler = useCallback(
+    (email, password) => {
+      createUserWithEmailAndPassword(email, password);
+    },
+    [createUserWithEmailAndPassword]
+  );
+
   useEffect(() => {
     const credentials = JSON.parse(localStorage.getItem(localStorageKey));
     if (credentials) {
@@ -57,6 +68,7 @@ export const AuthContextProvider = ({ children }) => {
         creationTime,
         signIn: signInHandler,
         signOut: signOutHandler,
+        register: registerHandler,
       }}
     >
       {children}
